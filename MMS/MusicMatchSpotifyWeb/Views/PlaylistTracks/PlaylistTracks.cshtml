@@ -1,0 +1,29 @@
+﻿@model SpotifyWebAPI.Page<SpotifyWebAPI.PlaylistTrack>
+
+@foreach (var item in @Model.Items)
+{
+    <tr>
+        <td>@item.Track.Name</td>
+        <td>@item.Track.Artists.FirstOrDefault().Name</td>
+        <td>@item.Track.Album.Name</td>
+        <td>
+            @{
+                //Milis to Min ( duration in ms / 60k )
+                TimeSpan t = TimeSpan.FromMilliseconds(item.Track.Duration);
+                string answer = string.Format("{0:D2}:{1:D2}",
+                                                        t.Minutes,
+                                                        t.Seconds);
+                                                        @answer
+            }
+        </td>
+    </tr>
+}
+
+
+
+
+
+
+
+
+

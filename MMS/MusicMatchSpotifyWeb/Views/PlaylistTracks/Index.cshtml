@@ -1,0 +1,135 @@
+﻿@model MusicMatchSpotifyWeb.ViewModel.PlaylistTracksViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+@{ var user = ViewData["LoggedUser"] as SpotifyWebAPI.User; }
+
+@section header{ @{Html.RenderPartial("_LogoHeader", @user);} }
+
+<style>
+    .table-hover > tbody > tr:hover {
+        background-color: #97b8d3;
+    }
+    .sort-duration{
+        width:88px;
+    }
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <p class="lead">@Model.CurrentPlaylist.Name</p>
+            <div class="list-group">
+                @foreach (var item in @Model.Playlist.Items.OrderBy(w => w.Name))
+                {
+                    var css = new object();
+
+                    if (@Model.CurrentPlaylist.Id == item.Id)
+                    {
+                        css = new { @class = "list-group-item active" };
+                    }
+                    else
+                    {
+                        css = new { @class = "list-group-item" };
+                    }
+
+                    @Html.ActionLink(item.Name, "Index", "PlaylistTracks", new { playlistId = item.Id, ownerId = item.Owner.Id }, css)
+                }
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="thumbnail">
+                <div class="row">
+                    <div class="col-md-3">
+                        <img class="plt-imgPlaylistTracks" src='@Url.Content(@Model.CurrentPlaylist.Images.FirstOrDefault().Url)' width="210" height="210" alt="">
+                    </div>
+                    <div class="col-md-9">
+                        <h5>PLAYLIST</h5>
+                    </div>
+                    <div class="col-xs-6">
+                        <h2>@Model.CurrentPlaylist.Name</h2>
+                    </div>
+                    <div class="plt-duracao">
+                        @{
+                            int duracaoMS = 0;
+                            foreach (var item in @Model.CurrentPlaylist.Tracks.Items)
+                            {
+                                duracaoMS += item.Track.Duration;
+                            }
+
+                            TimeSpan time = TimeSpan.FromMilliseconds(duracaoMS);
+                            string resposta = string.Format("{0:D2} hs {1:D2} min",
+                                                                    time.Hours,
+                                                                    time.Minutes);
+                            string qtdMusicas = string.Format("{0} Músicas, ", Model.CurrentPlaylist.Tracks.Items.Count.ToString());
+
+                            @qtdMusicas @resposta
+                        }
+                    </div>
+                    <div class="plt-seguidores">
+                        <p class="pull-right">@Model.CurrentPlaylist.Followers.Total Seguidores</p>
+                    </div>
+                </div>
+            </div>
+            <div class="well">
+                <div class="row">
+                    <div class="col-md-2 text-left">
+                        <a class="btn btn-success" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Comparar Playlist</a>
+                    </div>
+                    <div id="collapseExample" class="col-md-3 collapse width plt-div-comparar-playlist" aria-expanded="false">
+                        <div class="well" style="background-color: white; padding:2px; width:247px ">
+                            <input class="form-control" style="width:240px;height:30px;" type="text" name="Compare" placeholder="Digite o nome do seu amigo" />
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <table id="tblTracks" class="table table-hover infinite-scroll table_sort">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Música
+                                </th>
+                                <th>
+                                    Artísta
+                                </th>
+                                <th>
+                                    Album
+                                </th>
+                                <th class="sort-duration">
+                                    Duração
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{Html.RenderPartial("PlaylistTracks", @Model.PlaylistTrack);}
+                        </tbody>
+                    </table>
+                    <div class="row">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">@Html.Partial("_Loading")</div>
+                        <div class="col-md-4"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @section scripts{
+        <script src="/Scripts/table-sorter.js"></script>
+        <script type="text/javascript">
+            $(function () {
+                $("div#loading").hide();
+            });
+            var moreRowsUrl = '@Html.Raw(@Url.Action("PlaylistTracks", "PlaylistTracks", new {nextUrl = @Model.PlaylistTrack.Next}))'
+
+            $(window).scroll(scrollHandler);
+            
+            $(function () {
+                $("table.table_sort").sort_table({
+                    "action": "init"
+                });
+            });
+        </script>
+    }
+</div>

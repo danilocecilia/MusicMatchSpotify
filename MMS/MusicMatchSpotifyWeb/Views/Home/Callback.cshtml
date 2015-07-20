@@ -1,0 +1,51 @@
+﻿@model IEnumerable<MusicMatchSpotifyWeb.ViewModel.PlaylistViewModel>
+
+@{
+    ViewBag.Title = "Callback";
+}
+
+@{ var user = ViewData["LoggedUser"] as SpotifyWebAPI.User; }
+
+@section header{ @{Html.RenderPartial("_LogoHeader", @user);} }
+
+<style>
+    body{ margin-top:20px;}
+</style>
+
+<div class="container">
+    <!-- Jumbotron Header -->
+    <header class="jumbotron hero-spacer">
+        <h1>Bem Vindo @user.DisplayName!</h1>
+        <p>Aqui você poderá ver sua playlist, do seus amigos, comparar quais músicas vocês possuem em comum, e muito mais! Confira!</p>
+        <p>
+            <a class="btn btn-primary btn-large">Saiba Mais!</a>
+        </p>
+    </header>
+    <hr>
+    <!-- Title -->
+    <div class="row">
+        <div class="col-lg-12">
+            <h3>Minhas Playlists</h3>
+        </div>
+    </div>
+    <!-- /.row -->
+    <!-- Page Features -->
+    <div class="row text-center">
+        @foreach (var item in @Model)
+    {
+    <div class="col-md-3 col-sm-6 hero-feature">
+        <div class="thumbnail">
+            <img src="@item.Images.FirstOrDefault().Url" alt="">
+            <div class="caption">
+                <h3>@item.Name</h3>
+                <p>Criada por: @item.Owner.Id</p>
+                <p>
+                    <a href="#" class="btn btn-primary">Comparar</a> @Html.ActionLink("Ver músicas", "Index", "PlaylistTracks", new { playlistId = @item.Id, ownerId= @item.Owner.Id }, new { @class = "btn btn-default" })
+                </p>
+            </div>
+        </div>
+    </div>
+    }
+    </div>
+    <!-- /.row -->
+</div>

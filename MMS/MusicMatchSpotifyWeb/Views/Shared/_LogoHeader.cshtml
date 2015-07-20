@@ -1,0 +1,13 @@
+﻿@model SpotifyWebAPI.User
+<ul class="nav navbar-nav menu-font-size" style="float:right">
+    <li>
+        <a href="/Home/Profile" class="navbar-brand ">
+            @Model.DisplayName
+        </a>
+    </li>
+    <li>
+        <div class="header-img">
+            <img width="45" class="img-rounded" src="@Model.Images[0].Url" alt="">
+        </div>
+    </li>
+</ul>

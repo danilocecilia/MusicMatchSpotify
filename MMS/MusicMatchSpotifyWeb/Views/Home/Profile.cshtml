@@ -1,0 +1,42 @@
+﻿@model SpotifyWebAPI.User
+
+@section header{ @{Html.RenderPartial("_LogoHeader", @Model);} }
+
+<style>
+    body {
+        margin-top: 0px;
+    }
+</style>
+
+<header class="profile-header-image">
+    <div class="headline">
+        <div class="container">
+            <h1>Spotify</h1>
+            <h2>meu perfil</h2>
+        </div>
+    </div>
+</header>
+<div class="container">
+    <hr class="profile-featurette-divider">
+    <div class="featurette" id="about">
+        <div class="row">
+            <div class="col-md-6">
+                <dl class="dl-horizontal profile-perfil-usuario">
+                    <dt>Nome :</dt>
+                    <dd>@Model.DisplayName</dd>
+                    <dt>Email :</dt>
+                    <dd>@Model.EmailAddress</dd>
+                    <dt>País :</dt>
+                    <dd>@Model.Country</dd>
+                    <dt>Conta :</dt>
+                    <dd>@Model.Product</dd>
+                    <dt>Usuário :</dt>
+                    <dd>@Model.Id</dd>
+                </dl>
+            </div>
+            <div class="col-md-6">
+                <img class="featurette-image img-circle img-responsive pull-right" src="@Url.Content(@Model.Images[0].Url)">
+            </div>
+        </div>
+    </div>
+</div>
