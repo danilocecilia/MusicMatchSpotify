@@ -66,8 +66,9 @@ namespace MusicMatchSpotifyWeb.Controllers
             return PartialView("~/Views/Shared/_MenuLogoHeader.cshtml", LoggedUser);
         }
 
-        public ViewResult Profile()
-        {
+        public async Task<ViewResult> Profile()
+        { 
+            ViewData["Following"] = await SpotifyWebAPI.User.GetFollowedArtists(AuthenticationToken);
             return View(LoggedUser);
         }
     }
