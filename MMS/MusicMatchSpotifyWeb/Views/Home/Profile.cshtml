@@ -1,9 +1,6 @@
 ﻿@model SpotifyWebAPI.User
-
 @section header{ @{Html.RenderPartial("_LogoHeader", @Model);} }
-
 @{ SpotifyWebAPI.Page<SpotifyWebAPI.Artist> following = ViewData["Following"] as SpotifyWebAPI.Page<SpotifyWebAPI.Artist>;}
-
 <style>
     body {
         margin-top: 0px;
@@ -18,7 +15,6 @@
         background-size: cover;
     }
 </style>
-
 <header class="profile-header-image">
     <div class="headline">
         <div class="container">
@@ -28,7 +24,6 @@
     </div>
 </header>
 <div class="container">
-
 
     <div class="featurette" id="about">
         <div class="row">
@@ -51,22 +46,21 @@
             </div>
         </div>
         <div class="container">
-
             <ul class="nav nav-tabs" style="margin-top: 10px; border-bottom: 1px solid #e4e4e4; width: 100%">
                 <li class="active"><a href="#">Following (@following.Items.Count)</a></li>
                 <li><a href="#">Follower (0)</a></li>
             </ul>
-
             <!-- Tab panes -->
             <div class="tab-content">
                 <div class="tab-pane active">
-
                     <div class="container-fluid">
                         @foreach (var item in @following.Items)
                         {
                             <div class="row voffset2">
                                 <div class="col-md-2">
-                                    <img class="featurette-image img-circle" width="150" height="150" src="@item.Images[0].Url" alt="Alternate Text" />
+                                    <div class="img-circle" style="height:130px; width:130px;overflow:hidden;">
+                                        <img class="portrait" src="@item.Images[0].Url" alt="Alternate Text" />
+                                    </div>
                                 </div>
                                 <div class="col-md-2" style="margin-top:64px;">
                                     <p class="text-left menu-font-size">@item.Name</p>
@@ -74,7 +68,6 @@
                             </div>
                         }
                     </div>
-
                 </div>
             </div>
         </div>
