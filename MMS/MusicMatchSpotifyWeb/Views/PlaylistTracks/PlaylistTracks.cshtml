@@ -2,7 +2,7 @@
 
 @foreach (var item in @Model.Items)
 {
-    <tr>
+    <tr id="trTrackTitle" title="Clique para ouvir!" style="cursor:pointer" onclick="embededSpotify('@item.Track.Id');">
         <td>@item.Track.Name</td>
         <td>@item.Track.Artists.FirstOrDefault().Name</td>
         <td>@item.Track.Album.Name</td>
@@ -10,15 +10,12 @@
             @{
                 //Milis to Min ( duration in ms / 60k )
                 TimeSpan t = TimeSpan.FromMilliseconds(item.Track.Duration);
-                string answer = string.Format("{0:D2}:{1:D2}",
-                                                        t.Minutes,
-                                                        t.Seconds);
-                                                        @answer
+                string answer = string.Format("{0:D2}:{1:D2}", t.Minutes, t.Seconds);
+                @answer
             }
         </td>
     </tr>
 }
-
 
 
 
