@@ -2,12 +2,12 @@
 <ul class="nav navbar-nav menu-font-size" style="float:right">
     <li>
         <a href="/Home/Profile" class="navbar-brand ">
-            @Model.DisplayName
+            @(Model.DisplayName == null ? Model.Id : Model.DisplayName)
         </a>
     </li>
     <li>
         <div class="header-img">
-            <img width="45" class="img-thumbnail" style="padding:1px;" src="@Model.Images[0].Url" alt="">
+            <img width="45" class="img-thumbnail" style="padding:1px;" src="@(Model.Images.Count > 0 ? Model.Images[0].Url : "http://www.ala-access.com/s/wp-content/uploads/2016/01/analyst-placeholder-avatar.png")" alt="">
         </div>
     </li>
 </ul>

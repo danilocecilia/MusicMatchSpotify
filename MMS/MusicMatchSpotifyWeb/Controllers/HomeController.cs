@@ -14,7 +14,9 @@ namespace MusicMatchSpotifyWeb.Controllers
     {
         const string clientId = "d2982c5e5488466bb1b10dc77648fe81";
         const string clientSecret = "597fe6cf0d604935928deca66d73c557";
-        const string redirectUri = "http://localhost:26120/Home/Callback";
+        //const string redirectUri = "http://localhost:26120/Home/Callback";
+        const string redirectUri = "http://mmspotify.azurewebsites.net/Home/Callback";
+        
 
         // GET: /Home/
         public ActionResult Index()

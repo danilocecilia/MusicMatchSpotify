@@ -2,8 +2,12 @@
 @{
     ViewBag.Title = "Index";
 }
+
 @{ var user = ViewData["LoggedUser"] as SpotifyWebAPI.User; }
-@section header{ @{Html.RenderPartial("_LogoHeader", @user);} }
+
+@section header{ 
+                    @{Html.RenderPartial("_LogoHeader", @user);} 
+               }
 <style>
     .table-hover > tbody > tr:hover {
         background-color: #97b8d3;
